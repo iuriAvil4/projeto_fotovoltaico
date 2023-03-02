@@ -2,13 +2,13 @@ from dataclasses import replace
 from tkinter import *
 from tkinter import ttk
 import tkinter.messagebox
-import cx_Oracle
+import oracledb
 
 
-username = 'hr'  # usuário
-password = 'hr'  # senha
+username = 'SYSTEM'  # usuário
+password = '123456'  # senha
 # string de conexão do Oracle, configurado no cliente Oracle, arquivo tnsnames.ora
-dsn = 'localhost/xepdb1'
+dsn = 'localhost/xe'
 port = 1521
 encoding = 'UTF-8'
 
@@ -157,7 +157,7 @@ class Placas:
 
         # Data for binding
         pcampo_marca = self.campo_marca.get().replace(" ", "")
-        pcampo_modelo = self.campo_modelo.getvalue().strip()
+        pcampo_modelo = self.campo_modelo.get().strip()
         pcampo_potmax = float(self.campo_potmax.get().strip())
         pcampo_vmax = float(self.campo_vmax.get().strip())
         pcampo_imax = float(self.campo_imax.get().strip())
@@ -173,8 +173,7 @@ class Placas:
 
         try:
             # establish a new connection
-            connection = cx_Oracle.connect(
-                username, password, dsn, encoding=encoding)
+            connection = oracledb.connect(user="SYSTEM", password=password, dsn="localhost/xe")
             # create a cursor
             cursor = connection.cursor()
             pmsg = cursor.var(str)
@@ -192,7 +191,7 @@ class Placas:
             self.pesquisar_placa()
             print(pmsg)
 
-        except cx_Oracle.Error as error:
+        except oracledb.Error as error:
             print('Error occurred on add_placa:')
             print(error)
             return error
@@ -205,8 +204,7 @@ class Placas:
 
         try:
             # establish a new connection
-            connection = cx_Oracle.connect(
-                username, password, dsn, encoding=encoding)
+            connection = oracledb.connect(user="SYSTEM", password=password, dsn="localhost/xe")
             # create a cursor
             cursor = connection.cursor()
             pmsg = cursor.var(str)
@@ -215,7 +213,7 @@ class Placas:
             self.cb_placa.delete(0, END)
             self.cb_placa['values'] = [i[1] for i in cursor]
 
-        except cx_Oracle.Error as error:
+        except oracledb.Error as error:
             print('Error occurred on pesquisar_placa:')
             print(error)
             return error
@@ -255,8 +253,7 @@ class Placas:
 
         try:
             # establish a new connection
-            connection = cx_Oracle.connect(
-                username, password, dsn, encoding=encoding)
+            connection = oracledb.connect(user="SYSTEM", password=password, dsn="localhost/xe")
             # create a cursor
             cursor = connection.cursor()
             cursor.execute(sql, pmodelo=pmodel)
@@ -280,7 +277,7 @@ class Placas:
                 self.campo_tpcel.insert(0, row[12])
                 self.campo_descricao.insert(0, row[13])
 
-        except cx_Oracle.Error as error:
+        except oracledb.Error as error:
             print('Error occurred on preencher_campos:')
             print(error)
             return error
@@ -297,8 +294,7 @@ class Placas:
 
             try:
                 # establish a new connection
-                connection = cx_Oracle.connect(
-                    username, password, dsn, encoding=encoding)
+                connection = oracledb.connect(user="SYSTEM", password=password, dsn="localhost/xe")
                 # create a cursor
                 cursor = connection.cursor()
                 pmsg = cursor.var(str)
@@ -314,7 +310,7 @@ class Placas:
                 self.pesquisar_placa()
                 self.limpar_campos()
 
-            except cx_Oracle.Error as error:
+            except oracledb.Error as error:
                 print('Error occurred on delete_placa:')
                 print(error)
                 return error
