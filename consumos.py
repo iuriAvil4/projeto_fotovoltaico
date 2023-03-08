@@ -87,7 +87,7 @@ def add_consumo():
         # create a cursor
         cursor = connection.cursor()
         pmsg = cursor.var(str)
-        cursor.callproc('ProjetoPS.add_consumo', [pCONTA01,   pCONTA02,   pCONTA03,   pCONTA04,
+        cursor.callproc('SYSTEM.add_consumo', [pCONTA01,   pCONTA02,   pCONTA03,   pCONTA04,
                                            pCONTA05,   pCONTA06,   pCONTA07,   pCONTA08,
                                            pCONTA09,   pCONTA10,   pCONTA11,   pCONTA12,
                                            pKWH_1,     pKWH_2,     pKWH_3,     pKWH_4,
@@ -117,7 +117,7 @@ def calc_potencia_min():
         # create a cursor
         cursor = connection.cursor()
         pmsg = cursor.var(str)
-        cursor.callproc('HR.calc_potencia_min', [pID_projetos,    pmsg])
+        cursor.callproc('SYSTEM.calc_potencia_min', [pID_projetos,    pmsg])
 
         tkinter.messagebox.showinfo(
             title='Result',
